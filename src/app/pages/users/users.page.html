@@ -1,0 +1,27 @@
+
+<div class="container">
+    <div class="search-wrapper">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+    <div *ngIf="isLoading" class="loader-wrapper">
+        <mat-spinner mode="indeterminate" strokeWidth="4" diameter="40"></mat-spinner>
+    </div>
+    <div *ngIf="!isLoading" class="list-wrapper">
+        <ng-container *ngIf="users.length > 0; else emptyState">
+            <div *ngFor="let user of users" (click)="onUserCardClick(user.id)">
+                <app-user-card [user]="user"></app-user-card>
+            </div>
+        </ng-container>
+        <ng-template #emptyState>
+            <p>No users with this id</p>
+        </ng-template>
+    </div>
+    <div *ngIf="!isLoading && users.length == 0" class="list-wrapper"></div>
+</div>
+<mat-paginator 
+    class="paginator"
+    [length]="totalCount"
+    [pageSize]="6"
+    aria-label="Select page"
+    (page)="handlePage($event)">
+</mat-paginator>

@@ -1,0 +1,28 @@
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+}
+
+.search-wrapper {
+    width: 50%;
+    padding: 20px;
+}
+
+.list-wrapper {
+    width: 80%;
+    height: 80%; 
+    overflow: scroll;
+}
+
+.paginator {
+    bottom: 0px;
+    position: sticky;
+    z-index: 10;
+}
+
+.loader-wrapper {
+    padding-top: 10%;
+}
