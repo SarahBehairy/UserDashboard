@@ -1,11 +1,17 @@
 .container {
-    padding: 5%;
+    padding: 2%;
+    text-align: center;
 }
 
 .user-details {
-    padding: 20px;
+    padding: 2%;
 }
 
 .loader-wrapper {
     padding-top: 20%;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 200px;
 }

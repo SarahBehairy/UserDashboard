@@ -7,8 +7,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UsersModule } from './pages/users/users.module';
 import { HttpClientModule } from '@angular/common/http';
 import { UserDetailsModule } from './pages/user-details/user-details.module';
-import { ErrorHandleService } from './services/error-handle.service';
-import { HeaderModule } from './components/header/header.module';
 
 @NgModule({
   declarations: [
@@ -21,10 +19,6 @@ import { HeaderModule } from './components/header/header.module';
     UsersModule,
     UserDetailsModule,
     HttpClientModule  ],
-  providers: [{
-    provide: ErrorHandler,
-    useClass: ErrorHandleService
-  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

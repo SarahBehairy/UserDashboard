@@ -13,6 +13,7 @@ import { UserDetailsQuery } from '../stores/user-details/user-details.query';
 })
 export class UsersService {
   baseUrl = 'https://reqres.in/api/users';
+
   constructor(
     public httpClient: HttpClient,
     private usersStore: UsersStore,
@@ -21,8 +22,7 @@ export class UsersService {
     private userDetailsQuery: UserDetailsQuery
   ) {}
 
-  //todo: Observable<APIResponse<User[]>>
-  getUsers(pageNumber: number): any {
+  getUsers(pageNumber: number): Observable<APIResponse<User[]>| undefined> {
     const url = `${this.baseUrl}?page=${pageNumber}`;
     const request$ = this.httpClient.get<APIResponse<User[]>>(url).pipe(
       map((res) => {
@@ -34,7 +34,7 @@ export class UsersService {
         if (error.status === 404) {
           console.error('User not found: 404 error');
         }
-        return of([]);
+        return of(undefined);
       })
     );
     return this.usersQuery.hasEntity(pageNumber)
@@ -52,38 +52,17 @@ export class UsersService {
     const request$ = this.httpClient.get<APIResponse<User>>(url).pipe(
       map((res) => {
         this.userDetailsStore.add(res?.data);
-        console.log(res)
         this.usersStore.setActive(id);
         return res?.data;
       }),catchError((error) => {
-        return throwError(error);
+        if (error.status === 404) {
+          console.error('User details not found: 404 error');
+        }
+        return of(undefined);
       })
     );
-    console.log("has entity", this.userDetailsQuery.hasEntity(id), this.userDetailsQuery.selectEntity(id))
     return this.userDetailsQuery.hasEntity(id)
       ? this.userDetailsQuery.selectEntity(id)
       : request$;
   }
 }
-
-
-
-// getUserDetails(id: number): Observable<User> {
-//     const url = `${this.baseUrl}/${id}`;
-//     const request$ = this.httpClient.get<User>(url).pipe(
-//       map((res) => {
-//         this.userDetailsStore.add(res);
-//         this.usersStore.setActive(res.id);
-//         return res;
-//       }),
-//       catchError((error) => {
-//         if (error.status === 404) {
-//           console.error('User not found: 404 error');
-//         }
-//         return of([]);
-//       })
-//     );
-//     return this.userDetailsQuery.hasEntity(id)
-//       ? this.userDetailsQuery.selectEntity(id)
-//       : request$;
-//   }

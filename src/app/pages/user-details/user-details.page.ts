@@ -14,6 +14,7 @@ export class UserDetailsPage implements OnInit {
   user!: User;
   isLoading = false;
   showError = false;
+
   constructor(
     private route: ActivatedRoute,
     private usersService: UsersService,
@@ -33,6 +34,7 @@ export class UserDetailsPage implements OnInit {
       .subscribe({
         next: (res) => {
             if(res) this.user = res;
+            else this.showError = true;
             this.isLoading = false
         },
         error: () => {

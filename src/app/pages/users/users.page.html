@@ -1,24 +1,48 @@
+<app-header
+  [config]="{hasSearchBar:true}"
+  (searchBtnClickHandler)="onSearch($event)"
+></app-header>
 
-<app-header [config]="{hasSearchBar:true}" (searchBtnClickHandler)="onSearch($event)"></app-header>
-<div class="container">    
-    <div *ngIf="isLoading" class="loader-wrapper">
-        <app-loader></app-loader>
-    </div>
-    <div *ngIf="!isLoading" class="list-wrapper">
-        <ng-container *ngIf="users.length > 0; else emptyState">
-            <div *ngFor="let user of users" (click)="onUserCardClick(user.id)">
-                <app-user-card [user]="user"></app-user-card>
-            </div>
-        </ng-container>
-        <ng-template #emptyState>
-            <p>No users with this id</p>
-        </ng-template>
-    </div>
+<div class="container">
+  <div *ngIf="isLoading" class="loader-wrapper">
+    <app-loader></app-loader>
+  </div>
+  <div *ngIf="!isLoading" class="list-wrapper">
+    <ng-container *ngIf="users.length > 0; else emptyState">
+      <div>
+        <table class="users-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>ID</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of users" (click)="onUserCardClick(user.id)">
+              <td class="name">
+                <img class="avatar" src="{{user.avatar}}" />
+
+                {{user.first_name}} {{user.last_name}}
+              </td>
+              <td>{{user.id}}</td>
+              <td>{{user.email}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </ng-container>
+    <ng-template #emptyState>
+      <p>No users with this id</p>
+    </ng-template>
+  </div>
 </div>
-<mat-paginator 
-    class="paginator"
-    [length]="totalCount"
-    [pageSize]="6"
-    aria-label="Select page"
-    (page)="handlePage($event)">
+
+<mat-paginator
+  class="paginator"
+  [length]="totalCount"
+  [pageSize]="6"
+  aria-label="Select page"
+  (page)="handlePage($event)"
+>
 </mat-paginator>

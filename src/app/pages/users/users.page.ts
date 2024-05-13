@@ -6,13 +6,8 @@ import {
   Subject,
   Subscription,
   catchError,
-  concat,
   debounceTime,
-  distinctUntilChanged,
-  finalize,
-  map,
   of,
-  retry,
   switchMap,
 } from 'rxjs';
 import { APIResponse } from 'src/app/models/api-response.model';
@@ -26,7 +21,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class UsersPage implements OnInit, OnDestroy {
   users: User[] = [];
-  results: User[] | unknown = []; //todo
+  results!: User[];
   isLoading = false;
   totalCount = 0;
   totalPages = 1;
@@ -56,7 +51,6 @@ export class UsersPage implements OnInit, OnDestroy {
       .subscribe({
         next: (user) => {
           if (user) {
-            console.log(user);
             this.users = [user];
             this.totalCount = 1;
             this.pageNumber = 1;
@@ -67,7 +61,6 @@ export class UsersPage implements OnInit, OnDestroy {
           this.isLoading = false;
         },
         error: () => {
-          console.log('err');
           this.handleError();
         },
       });
@@ -81,33 +74,29 @@ export class UsersPage implements OnInit, OnDestroy {
     this.isLoading = false;
   }
 
-  getUsers(pageNumber: number): void {
-    this.usersService.getUsers(pageNumber).subscribe({
-      next: (res: APIResponse<User[]>) => {
-        console.log(res);
-        this.users = res.data;
-        this.totalCount = res?.total || 0;
-        this.totalPages = res?.total_pages || 0;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.users = [];
-        this.totalCount = 0;
-        this.totalPages = 0;
-        this.pageNumber = 1;
-        this.isLoading = false;
-      },
-    });
-  }
-
   onSearch(term: string): void {
-    console.log(term);
     this.isLoading = true;
     if (!term) {
       this.getUsers(this.pageNumber);
     } else if (typeof +term !== 'number') {
       this.handleError();
     } else this.searchTerms.next(+term);
+  }
+
+  getUsers(pageNumber: number): void {
+    this.usersService.getUsers(pageNumber).subscribe({
+      next: (res) => {
+        if(res){
+          this.users = res.data;
+          this.totalCount = res?.total || 0;
+          this.totalPages = res?.total_pages || 1;
+          this.isLoading = false;
+        }
+      },
+      error: () => {
+        this.handleError();
+      },
+    });
   }
 
   searchUsers(term: number): Observable<User> {

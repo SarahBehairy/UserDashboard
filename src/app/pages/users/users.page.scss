@@ -1,19 +1,74 @@
 .container {
+    display: flex;
+    justify-content: center;
     overflow: hidden;
+    padding: 2% 10%;
+    height: 65%; 
 }
 
 .list-wrapper {
-    height: 80%; 
+    width: 100%;
     overflow: scroll;
-    padding: 20px 10%;
 }
 
 .paginator {
     bottom: 0px;
-    position: sticky;
+    right: 0;
+    position: fixed;
     z-index: 10;
 }
 
 .loader-wrapper {
     padding-top: 20%;
+}
+
+.avatar {
+    border-radius: 50%;
+    width: 40px;
+    margin-right: 8px;
+}
+
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+        padding-bottom: 10px;
+        text-align: left;
+    }
+
+    th {
+        font-size: 16px;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    td {
+        min-height: 40px;
+        padding: 15px 0;
+        cursor: pointer;
+    }
+
+    .name {
+        display: flex;
+        align-items: center;
+        padding: 15px;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+
+    tbody tr:hover {
+          transform: scale(1.02);
+    }
+
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding-right: 0;
+        padding-left: 0;
+    }
 }

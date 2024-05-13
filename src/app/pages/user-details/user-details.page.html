@@ -1,16 +1,20 @@
-<app-header [config]="{hasBackBtn: true}" (backBtnClickHandler)="navigateToUsers()"></app-header>
+<app-header
+  [config]="{hasBackBtn: true}"
+  (backBtnClickHandler)="navigateToUsers()"
+></app-header>
 <div class="container">
-    <div *ngIf="isLoading" class="loader-wrapper">
-        <app-loader></app-loader>
+  <div *ngIf="isLoading" class="loader-wrapper">
+    <app-loader></app-loader>
+  </div>
+  <div *ngIf="!isLoading && user">
+    <img class="avatar" [src]="user.avatar" />
+    <div class="user-details">
+      <h2>{{user.first_name}} {{user.last_name}}</h2>
+      <p>id: {{user.id}}</p>
+      <p>email: {{user.email}}</p>
     </div>
-    <div *ngIf="!isLoading">
-        <div *ngIf="user" class="user-details"></div>
-        <img [src]="user.avatar"/>
-        <div class="user-details">
-            <h2>{{user.first_name}} {{user.last_name}}</h2>
-            <p>id: {{user.id}}</p>
-            <p>email: {{user.email}}</p>
-        </div>
-        <p *ngIf="showError">Sorry we cannot fetch the user details at this moment</p>
-</div>
+  </div>
+  <p *ngIf="showError">
+    Sorry we cannot fetch the user details at this moment
+  </p>
 </div>
