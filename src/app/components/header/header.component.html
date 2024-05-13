@@ -1,0 +1,7 @@
+<div class="container">
+    <img *ngIf="config.hasBackBtn" width="24" class="back-icon" src="assets/icons/back-arrow.svg" (click)="onBackClick()">
+    <h2 class="title">User Dashboard</h2>
+    <div *ngIf="config.hasSearchBar" class="search-wrapper">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    </div>
+</div>

@@ -1,10 +1,8 @@
 
-<div class="container">
-    <div class="search-wrapper">
-        <app-search-bar (search)="onSearch($event)"></app-search-bar>
-    </div>
+<app-header [config]="{hasSearchBar:true}" (searchBtnClickHandler)="onSearch($event)"></app-header>
+<div class="container">    
     <div *ngIf="isLoading" class="loader-wrapper">
-        <mat-spinner mode="indeterminate" strokeWidth="4" diameter="40"></mat-spinner>
+        <app-loader></app-loader>
     </div>
     <div *ngIf="!isLoading" class="list-wrapper">
         <ng-container *ngIf="users.length > 0; else emptyState">
@@ -16,7 +14,6 @@
             <p>No users with this id</p>
         </ng-template>
     </div>
-    <div *ngIf="!isLoading && users.length == 0" class="list-wrapper"></div>
 </div>
 <mat-paginator 
     class="paginator"

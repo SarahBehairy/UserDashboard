@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { EntityState, EntityStore, StoreConfig } from '@datorama/akita';
-import { APIResponse } from '../models/api-response.model';
-import { User } from '../models/user.model';
+import { APIResponse } from '../../models/api-response.model';
+import { User } from '../../models/user.model';
 
 
 export type Userstate = EntityState<APIResponse<User[]>>;

@@ -5,7 +5,8 @@ import { UsersService } from "src/app/services/users.service";
 import { CommonModule } from "@angular/common";
 import { SearchBarModule } from "src/app/components/search-bar/search-bar.module";
 import { MatPaginatorModule} from '@angular/material/paginator';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { LoaderModule } from "src/app/components/loader/loader.module";
+import { HeaderModule } from "src/app/components/header/header.module";
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
     UserCardModule,
     SearchBarModule,
     MatPaginatorModule,
-    MatProgressSpinnerModule
+    LoaderModule,
+    HeaderModule
   ],
   declarations: [
     UsersPage,
